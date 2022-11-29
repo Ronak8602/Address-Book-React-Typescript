@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Address-Book-React-Typescript/static/css/main.1606374c.css",
-    "main.js": "/Address-Book-React-Typescript/static/js/main.e8716006.js",
+    "main.css": "/Address-Book-React-Typescript/static/css/main.8db756b6.css",
+    "main.js": "/Address-Book-React-Typescript/static/js/main.e539e343.js",
     "static/js/787.7e6b2129.chunk.js": "/Address-Book-React-Typescript/static/js/787.7e6b2129.chunk.js",
     "index.html": "/Address-Book-React-Typescript/index.html",
-    "main.1606374c.css.map": "/Address-Book-React-Typescript/static/css/main.1606374c.css.map",
-    "main.e8716006.js.map": "/Address-Book-React-Typescript/static/js/main.e8716006.js.map",
+    "main.8db756b6.css.map": "/Address-Book-React-Typescript/static/css/main.8db756b6.css.map",
+    "main.e539e343.js.map": "/Address-Book-React-Typescript/static/js/main.e539e343.js.map",
     "787.7e6b2129.chunk.js.map": "/Address-Book-React-Typescript/static/js/787.7e6b2129.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1606374c.css",
-    "static/js/main.e8716006.js"
+    "static/css/main.8db756b6.css",
+    "static/js/main.e539e343.js"
   ]
 }
