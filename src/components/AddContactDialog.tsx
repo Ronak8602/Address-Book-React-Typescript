@@ -1,19 +1,18 @@
 import "../App.css";
 import React, { Component } from "react";
 import { ApiProvider, Contact } from "../api provider/api_provider";
+import { PrimaryButton } from "@fluentui/react";
+import DialogData from "../interfaces/interfaces";
 
 class AddContactDialog extends Component<
   {
-    handleCancelAdd: Function;
-    handleCancelUpdate: Function;
-    isUpdate?: boolean;
-    contact?: Contact;
+    dialogData: DialogData;
   },
   any
 > {
   constructor(props: any) {
     super(props);
-    this.props.isUpdate === undefined
+    this.props.dialogData.isUpdate === undefined
       ? (this.state = {
           name: "",
           email: "",
@@ -23,16 +22,18 @@ class AddContactDialog extends Component<
           address: "",
           nameWarning: "*",
           mobileWarning: "*",
+          emailWarning: "",
         })
       : (this.state = {
-          name: this.props.contact?.name,
-          email: this.props.contact?.email,
-          mobile: this.props.contact?.mobile,
-          landline: this.props.contact?.landline,
-          website: this.props.contact?.website,
-          address: this.props.contact?.address,
+          name: this.props.dialogData.contact?.name,
+          email: this.props.dialogData.contact?.email,
+          mobile: this.props.dialogData.contact?.mobile,
+          landline: this.props.dialogData.contact?.landline,
+          website: this.props.dialogData.contact?.website,
+          address: this.props.dialogData.contact?.address,
           nameWarning: "*",
           mobileWarning: "*",
+          emailWarning: "",
         });
 
     this.handleCancelAdd = this.handleCancelAdd.bind(this);
@@ -47,43 +48,45 @@ class AddContactDialog extends Component<
     this.handleUpdate = this.handleUpdate.bind(this);
   }
 
-  handleCancelAdd(e: React.MouseEvent) {
+  handleCancelAdd(e: any) {
     e.preventDefault();
-    this.props.handleCancelAdd();
+    this.props.dialogData.handleCancelAdd();
   }
 
   handleCancelUpdate(e: React.MouseEvent) {
     e.preventDefault();
-    this.props.handleCancelUpdate();
+    this.props.dialogData.handleCancelUpdate();
   }
 
-  handleNameChange(event: any) {
+  handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ name: event.target.value });
   }
 
-  handleEmailChange(event: any) {
+  handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ email: event.target.value });
   }
 
-  handleMobileChange(event: any) {
+  handleMobileChange(event: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ mobile: event.target.value });
   }
 
-  handleLandlineChange(event: any) {
+  handleLandlineChange(event: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ landline: event.target.value });
   }
 
-  handleWebsiteChange(event: any) {
+  handleWebsiteChange(event: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ website: event.target.value });
   }
 
-  handleAddressChange(event: any) {
+  handleAddressChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     this.setState({ address: event.target.value });
   }
 
   validateFields(): boolean {
     let nameFilter = /^[A-Za-z ]+$/;
     let mobileFilter = /^\d{10}$/;
+    let emailFilter =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     let count = 0;
 
@@ -96,6 +99,15 @@ class AddContactDialog extends Component<
         count++;
       } else {
         this.setState({ nameWarning: "*" });
+      }
+    }
+
+    if (this.state.email != "") {
+      if (!emailFilter.test(this.state.email)) {
+        this.setState({ emailWarning: "Enter valid email" });
+        count++;
+      } else {
+        this.setState({ emailWarning: "" });
       }
     }
 
@@ -127,7 +139,7 @@ class AddContactDialog extends Component<
 
   handleUpdate(e: any) {
     let validation = this.validateFields();
-    let key = this.props.contact?.key;
+    let key = this.props.dialogData.contact?.key;
     if (validation === true) {
       let contact = this.createContactDataObject(Date.now().toString());
       let userList = ApiProvider.getFromLocalStorage("users");
@@ -172,7 +184,7 @@ class AddContactDialog extends Component<
             />
             <div className="labelRow">
               <p className="addContactLabel">Email</p>
-              <p className="addContactWarning"></p>
+              <p className="addContactWarning">{this.state.emailWarning}</p>
             </div>
             <input
               className="addContactInput"
@@ -225,30 +237,33 @@ class AddContactDialog extends Component<
               onChange={this.handleAddressChange}
             ></textarea>
           </div>
-          {this.props.isUpdate === undefined ? (
-            <button className="addButton showButton" onClick={this.handleAdd}>
+          {this.props.dialogData.isUpdate === undefined ? (
+            <PrimaryButton
+              className="addButton showButton"
+              onClick={this.handleAdd}
+            >
               Add
-            </button>
+            </PrimaryButton>
           ) : null}
-          {this.props.isUpdate === undefined ? null : (
-            <button
+          {this.props.dialogData.isUpdate === undefined ? null : (
+            <PrimaryButton
               className="updateButton showButton"
               onClick={this.handleUpdate}
             >
               Update
-            </button>
+            </PrimaryButton>
           )}
 
-          <button
+          <PrimaryButton
             className="cancelButton"
             onClick={
-              this.props.isUpdate === undefined
+              this.props.dialogData.isUpdate === undefined
                 ? this.handleCancelAdd
                 : this.handleCancelUpdate
             }
           >
             Cancel
-          </button>
+          </PrimaryButton>
         </div>
       </div>
     );

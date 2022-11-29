@@ -277,8 +277,8 @@ textarea {
 
 .addButton {
   background-color: #478c01;
-  border: none;
-  color: white;
+  /* border: none;
+  color: white; */
   padding: 6px 42px;
   text-align: center;
   text-decoration: none;
@@ -290,8 +290,8 @@ textarea {
 
 .updateButton {
   background-color: #478c01;
-  border: none;
-  color: white;
+  /* border: none;
+  color: white; */
   padding: 6px 42px;
   text-align: center;
   text-decoration: none;
@@ -303,14 +303,19 @@ textarea {
 
 .cancelButton {
   background-color: #478c01;
-  border: none;
-  color: white;
+  /* border: none;
+  color: white; */
   padding: 6px 42px;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
   position: relative;
+  border-color: #478c01;
   left: 40%;
+}
+
+.cancelButton:hover {
+  background-color: #478c11;
 }
 
 .showButton {

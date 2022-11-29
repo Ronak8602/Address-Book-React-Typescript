@@ -6,6 +6,7 @@ import { ApiProvider, Contact } from "./api provider/api_provider";
 import ContactDetails from "./components/ContactDetails";
 import ContactCardList from "./components/ContactCardList";
 import AddContactDialog from "./components/AddContactDialog";
+import DialogData from "./interfaces/interfaces";
 
 class App extends Component<any, any> {
   constructor(props: any) {
@@ -59,6 +60,18 @@ class App extends Component<any, any> {
   }
 
   render() {
+    let dialogDataUpdate: DialogData = {
+      handleCancelAdd: this.handleAddDialog,
+      handleCancelUpdate: this.handleUpdateDialog,
+      isUpdate: true,
+      contact: this.state.selectedContact,
+    };
+
+    let dialogDataAdd: DialogData = {
+      handleCancelAdd: this.handleAddDialog,
+      handleCancelUpdate: this.handleUpdateDialog,
+    };
+
     return (
       <div className="scaffold">
         <Header></Header>
@@ -82,18 +95,10 @@ class App extends Component<any, any> {
             ></ContactDetails>
           ) : null}
           {this.state.showUpdateDialog === true ? (
-            <AddContactDialog
-              handleCancelAdd={this.handleAddDialog}
-              handleCancelUpdate={this.handleUpdateDialog}
-              isUpdate={true}
-              contact={this.state.selectedContact}
-            ></AddContactDialog>
+            <AddContactDialog dialogData={dialogDataUpdate}></AddContactDialog>
           ) : null}
           {this.state.showAddDialog === true ? (
-            <AddContactDialog
-              handleCancelAdd={this.handleAddDialog}
-              handleCancelUpdate={this.handleUpdateDialog}
-            ></AddContactDialog>
+            <AddContactDialog dialogData={dialogDataAdd}></AddContactDialog>
           ) : null}
         </div>
       </div>
