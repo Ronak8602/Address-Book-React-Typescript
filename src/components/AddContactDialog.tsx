@@ -2,7 +2,7 @@ import "../App.css";
 import React, { Component } from "react";
 import { ApiProvider, Contact } from "../api provider/api_provider";
 import { PrimaryButton } from "@fluentui/react";
-import DialogData from "../interfaces/interfaces";
+import DialogData, { ContactDataState } from "../interfaces/interfaces";
 
 class AddContactDialog extends Component<
   {
@@ -12,29 +12,43 @@ class AddContactDialog extends Component<
 > {
   constructor(props: any) {
     super(props);
-    this.props.dialogData.isUpdate === undefined
-      ? (this.state = {
-          name: "",
-          email: "",
-          mobile: "",
-          landline: "",
-          website: "",
-          address: "",
-          nameWarning: "*",
-          mobileWarning: "*",
-          emailWarning: "",
-        })
-      : (this.state = {
-          name: this.props.dialogData.contact?.name,
-          email: this.props.dialogData.contact?.email,
-          mobile: this.props.dialogData.contact?.mobile,
-          landline: this.props.dialogData.contact?.landline,
-          website: this.props.dialogData.contact?.website,
-          address: this.props.dialogData.contact?.address,
-          nameWarning: "*",
-          mobileWarning: "*",
-          emailWarning: "",
-        });
+    let contactDataState: ContactDataState = {
+      name: this.props.dialogData.contact?.name ?? "",
+      email: this.props.dialogData.contact?.email ?? "",
+      mobile: this.props.dialogData.contact?.mobile ?? "",
+      landline: this.props.dialogData.contact?.landline ?? "",
+      website: this.props.dialogData.contact?.website ?? "",
+      address: this.props.dialogData.contact?.address ?? "",
+      nameWarning: "*",
+      mobileWarning: "*",
+      emailWarning: "",
+    };
+
+    this.state = contactDataState;
+
+    // this.props.dialogData.isUpdate === undefined
+    //   ? (this.state = {
+    //       name: "",
+    //       email: "",
+    //       mobile: "",
+    //       landline: "",
+    //       website: "",
+    //       address: "",
+    //       nameWarning: "*",
+    //       mobileWarning: "*",
+    //       emailWarning: "",
+    //     })
+    //   : (this.state = {
+    //       name: this.props.dialogData.contact?.name,
+    //       email: this.props.dialogData.contact?.email,
+    //       mobile: this.props.dialogData.contact?.mobile,
+    //       landline: this.props.dialogData.contact?.landline,
+    //       website: this.props.dialogData.contact?.website,
+    //       address: this.props.dialogData.contact?.address,
+    //       nameWarning: "*",
+    //       mobileWarning: "*",
+    //       emailWarning: "",
+    //     });
 
     this.handleCancelAdd = this.handleCancelAdd.bind(this);
     this.handleCancelUpdate = this.handleCancelUpdate.bind(this);
